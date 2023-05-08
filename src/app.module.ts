@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { NftModule } from './modules/nft/nft.module';
+import { NftCollectionModule } from './modules/nft-collection/nft-collection.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { UserModule } from './modules/user/user.module';
     }),
     AuthModule,
     UserModule,
+    NftModule,
+    NftCollectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

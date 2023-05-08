@@ -10,7 +10,7 @@ import {
 } from 'ethers';
 import { User } from '../user/schemas/user.schema';
 import { UserService } from '../user/user.service';
-import { JwtPayload } from './interface/jwtPayload.interface';
+import { JwtPayload } from './types/jwtPayload.type';
 import * as crypto from 'crypto';
 import { createSignMessage } from './utils/sign';
 

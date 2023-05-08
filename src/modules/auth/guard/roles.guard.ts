@@ -1,4 +1,4 @@
-import { UserRoleEnum } from 'src/modules/user/interfaces/userRole.enum';
+import { UserRoleEnum } from 'src/modules/user/types/userRole.enum';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorator/roles.decorator';

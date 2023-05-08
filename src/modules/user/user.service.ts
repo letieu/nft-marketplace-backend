@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { getAddress } from 'ethers';
-import { UserStatusEnum } from './interfaces/userStatus.enum';
+import { UserStatusEnum } from './types/userStatus.enum';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
