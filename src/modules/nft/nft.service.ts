@@ -63,6 +63,13 @@ export class NftService {
     return `This action returns a #${id} nft`;
   }
 
+  findOneByTokenId(tokenId: string, tokenAddress: string) {
+    return this.model.findOne({
+      tokenId: tokenId,
+      tokenAddress: getAddress(tokenAddress),
+    });
+  }
+
   update(id: number, updateNftDto: UpdateNftDto) {
     return `This action updates a #${id} nft`;
   }

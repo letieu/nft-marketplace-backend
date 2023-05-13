@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { NftModule } from './modules/nft/nft.module';
 import { NftCollectionModule } from './modules/nft-collection/nft-collection.module';
+import { SaleModule } from './modules/sale/sale.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { NftCollectionModule } from './modules/nft-collection/nft-collection.mod
     UserModule,
     NftModule,
     NftCollectionModule,
+    SaleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
