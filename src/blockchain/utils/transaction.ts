@@ -6,6 +6,8 @@ export async function getTransaction(txHash: string, tryTimes = 10) {
   const provider = getRpcProvider();
   let tries = 0;
   let tx = await provider.getTransaction(txHash);
+
+  // try to get transaction for 10 times if it is not found
   while (tries < tryTimes && !tx) {
     tries++;
     // increase delay between tries
@@ -33,7 +35,13 @@ export async function getLogsFromTransaction(
   return logs
     .map((log) => {
       try {
-        return iface.decodeEventLog(name, log.data, log.topics);
+        // return iface.decodeEventLog(name, log.data, log.topics); // ethers v5
+
+        return iface.parseLog({
+          // ethers v6
+          topics: log.topics as string[],
+          data: log.data,
+        });
       } catch (e) {
         console.log(e);
       }

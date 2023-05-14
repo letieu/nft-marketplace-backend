@@ -13,6 +13,7 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 import { UpdateSaleDto } from './dto/update-sale.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guard/jwt.guard';
+import { BuySaleDto } from './dto/buy.dto';
 
 @ApiTags('SALE')
 @Controller('sales')
@@ -24,6 +25,11 @@ export class SaleController {
   @Post()
   create(@Body() createSaleDto: CreateSaleDto) {
     return this.saleService.create(createSaleDto);
+  }
+
+  @Post('/buy')
+  buy(@Body() buySaleDto: BuySaleDto) {
+    return this.saleService.buyByHash(buySaleDto.txHash);
   }
 
   @Get()
@@ -39,10 +45,5 @@ export class SaleController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSaleDto: UpdateSaleDto) {
     return this.saleService.update(+id, updateSaleDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.saleService.remove(+id);
   }
 }

@@ -5,7 +5,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Sale } from './schemas/sale.schema';
 import { Model } from 'mongoose';
 import { NftService } from '../nft/nft.service';
-import { Nft } from '../nft/schemas/nft.schema';
+import { getLogsFromTransaction } from 'src/blockchain/utils/transaction';
+import * as marketAbi from 'src/blockchain/abi/contracts/marketplace/Marketplace.sol/Marketplace.json';
+import { Interface, getAddress } from 'ethers';
 
 @Injectable()
 export class SaleService {
@@ -41,6 +43,27 @@ export class SaleService {
     );
   }
 
+  async buyByHash(txHash: string) {
+    const logs = await getLogsFromTransaction(
+      txHash,
+      'NFTBought',
+      new Interface(marketAbi),
+    );
+    for await (const log of logs) {
+      const { _buyer, _seller, _tokenAddress, _tokenId } = log.args;
+
+      const nft = await this.nftService.updateOwner(
+        _tokenId.toString(),
+        _tokenAddress,
+      );
+
+      await this.model.findOneAndDelete({
+        nft: nft._id,
+        sellerAddress: getAddress(_seller),
+      });
+    }
+  }
+
   findAll() {
     return this.model.find().populate('nft');
   }
@@ -51,9 +74,5 @@ export class SaleService {
 
   update(id: number, updateSaleDto: UpdateSaleDto) {
     return `This action updates a #${id} sale`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} sale`;
   }
 }

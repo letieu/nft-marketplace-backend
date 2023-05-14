@@ -77,4 +77,21 @@ export class NftService {
   remove(id: number) {
     return `This action removes a #${id} nft`;
   }
+
+  async updateOwner(tokenId: string, tokenAddress: string) {
+    const contract = getContract(tokenAddress, collectionAbi);
+    const ownerAddress = await contract.ownerOf(tokenId);
+
+    const nft = await this.model.findOneAndUpdate(
+      {
+        tokenId: tokenId,
+        tokenAddress: getAddress(tokenAddress),
+      },
+      {
+        ownerAddress: getAddress(ownerAddress),
+      },
+    );
+
+    return nft;
+  }
 }
